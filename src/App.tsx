@@ -1,25 +1,37 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/dashboard/Dashboard';
+import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import './App.css'
+// Importa los componentes de página
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-      <>
-     <BrowserRouter>
+    // 1. BrowserRouter habilita el ruteo
+    <BrowserRouter>
+      {/* Barra de Navegación: siempre visible */}
+      <nav style={{ borderBottom: '1px solid #ccc', padding: '10px' }}>
+        <Link to="/" style={{ marginRight: '15px' }}>Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
+      </nav>
+
+      {/* 2. Routes define las rutas */}
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        {/*
+          RUTA PRINCIPAL: Al usar path="/", Home es la primera página
+        */}
+        <Route path="/" element={<Home />} />
+
+        {/* Ruta para el Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Ruta de fallback (404) */}
+        <Route path="*" element={<div style={{ padding: '20px' }}>
+          <h2>404 - Página no encontrada</h2>
+        </div>} />
       </Routes>
     </BrowserRouter>
-    <div style={{ position: 'fixed', top: 8, right: 8 }}>
-      <span>count: {count}</span>
-      <button onClick={() => setCount(c => c + 1)} style={{ marginLeft: 8 }}>+1</button>
-    </div>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
