@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+// Importa los componentes de página
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // 1. BrowserRouter habilita el ruteo
+    <BrowserRouter>
+      {/* Barra de Navegación: siempre visible */}
+      <nav style={{ borderBottom: '1px solid #ccc', padding: '10px' }}>
+        <Link to="/" style={{ marginRight: '15px' }}>Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
+      </nav>
+
+      {/* 2. Routes define las rutas */}
+      <Routes>
+        {/*
+          RUTA PRINCIPAL: Al usar path="/", Home es la primera página
+        */}
+        <Route path="/" element={<Home />} />
+
+        {/* Ruta para el Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Ruta de fallback (404) */}
+        <Route path="*" element={<div style={{ padding: '20px' }}>
+          <h2>404 - Página no encontrada</h2>
+        </div>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
